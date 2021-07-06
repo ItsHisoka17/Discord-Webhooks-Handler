@@ -6,22 +6,29 @@ class BaseMessage {
      * 
      * @param {object} data 
      */
-    constructor(content, options){
+    constructor(content, options = {}){
         this.content = content;
         this.options = options;
         this.data = {};
     }
 
     resolve(){
-        Object.assign(this.data, this.options);
+        this.data = {...this.data, ...this.options};
         if (this.content instanceof Embed){
             this.data.embeds = [this.content]
         }
-        if (typeof this.content === 'object'){
-            this.data = {...this.content}
-        }
         if (typeof this.content === 'string'){
-            this.data.content = this.content;
+            this.data.content = this.content
+        }
+
+        if (this.data.embeds){
+            let arrayEmbeds = [];
+            for (const e of this.data.embeds){
+                if (e instanceof Embed){
+                    arrayEmbeds.push(e)
+                }
+            }
+            this.data.embeds = arrayEmbeds;
         }
         return this.data;
     }

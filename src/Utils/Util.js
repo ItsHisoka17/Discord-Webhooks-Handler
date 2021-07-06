@@ -24,6 +24,19 @@ class Util {
         return false;
       }
     }
+    static verifyString(
+      data,
+      error = Error,
+      errorMessage = `Expected a string, got ${data} instead.`,
+      allowEmpty = true,
+    ) {
+      if (typeof data !== 'string') throw new error(errorMessage);
+      if (!allowEmpty && data.length === 0) throw new error(errorMessage);
+      return data;
+    }
+    static cloneObject(obj) {
+      return Object.assign(Object.create(obj), obj);
+    }
 }
 
 module.exports = Util;

@@ -11,15 +11,15 @@ class Message extends Base {
     }
 
 async delete(){
-    let res = await fetch(this.url + '/messages' + '/' + this.id + '?wait=true', {method: 'delete'});
-    return new Message(this.webhookid, this.webhooktoken, res)
+    fetch(this.url + '/messages' + '/' + this.id, {method: 'delete'});
+    return true;
 }
 
 async edit(content, options){
     let message = new BaseMessage(content, options)
     let body = message.resolve();
-    let res = await fetch(this.url + '/messages' + '/' + this.id + '?wait=true', {method: 'patch', body})
-    return new Message(this.webhookid, this.webhooktoken, res)
+    let res = await fetch(this.url + '/messages' + '/' + this.id + '?wait=true', {method: 'patch',  body: JSON.stringify(body), headers: { 'Content-Type': 'application/json' }})
+    return new Message(this.webhookid, this.webhooktoken, (await res.json()))
 }
 }
 

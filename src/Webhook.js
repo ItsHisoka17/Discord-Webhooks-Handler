@@ -13,12 +13,23 @@ class Webhook extends Base {
         super(webhookid, webhooktoken)
     }
 
-async send(content, options){
-    let message = new BaseMessage(content, options);
-    let body = message.resolve()
-    let res = await fetch(`${this.url}?wait=true`, {method: 'post', body: JSON.stringify(body), headers: { 'Content-Type': 'application/json' }})
-    return new Message(this.webhookid, this.webhooktoken, (await res.json()))
-}
+    async send(content, options){
+        let body = content instanceof BaseMessage ? content.resolve() : new BaseMessage(content, options).resolve();
+        let res = await fetch(`${this.url}?wait=true`, {method: 'post', body: JSON.stringify(body), headers: { 'Content-Type': 'application/json' }})
+        return new Message(this.webhookid, this.webhooktoken, (await res.json()))
+    }
+    /**
+     * Deletes the webhook
+     * @returns {boolean}
+     */
+    async delete(){
+        fetch(this.url, {method: 'delete'})
+        return true;
+    }
+    /**
+     * 
+     * @param {string} name 
+     */
 }
 
 module.exports = Webhook;

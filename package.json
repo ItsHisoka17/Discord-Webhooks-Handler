@@ -1,6 +1,6 @@
 {
   "name": "discord-webhooks-handler",
-  "version": "1.8.3",
+  "version": "1.9.5",
   "description": "A NodeJS Module for interacting with discord webhooks",
   "main": "src/Webhook.js",
   "scripts": {

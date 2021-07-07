@@ -1,4 +1,4 @@
-# Discord Webhooks - Better interact with Discord Webhooks API
+# Discord Webhooks Handler - Better interact with Discord Webhooks API
 
 ### Why use this?
 

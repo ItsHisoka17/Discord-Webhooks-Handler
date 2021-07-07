@@ -18,9 +18,25 @@ class Base {
         fetch(this.url)
         .then((res) => res.json())
         .then((data) => {
+            /**
+             * ID of the webhook's guild
+             * @type {string}
+             */
             this.guild = data["guild_id"];
+            /**
+             * Application ID of the webhook
+             * @type {string}
+             */
             this.applicationid = data["application_id"]
+            /**
+             * Webhook's username
+             * @type {string}
+             */
             this.username = data["username"]
+            /**
+             * Webhook's avatar extension
+             * @type {string}
+             */
             this.avatar = data["avatar"]
         })
     }

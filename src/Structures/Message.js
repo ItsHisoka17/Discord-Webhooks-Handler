@@ -9,8 +9,24 @@ class Message extends Base {
             this[e] = data[e];
         }
     }
-
-async delete(){
+    /**
+     * Deletes the message
+     * @param {{timeout: number}} options 
+     * @returns {boolean}
+     */
+async delete(options = {timeout: 0}){
+    if (options.timeout && options.timeout>0){
+        setTimeout(function(){
+            fetch(this.url + '/messages' + '/' + this.id, {method: 'delete'})
+        }, options.timeout)
+        return true;
+    }
+    if (typeof options === 'number' && options>0){
+        setTimeout(function(){
+            fetch(this.url + '/messages' + '/' + this.id, {method: 'delete'})
+        }, options)
+        return true;
+    }
     fetch(this.url + '/messages' + '/' + this.id, {method: 'delete'});
     return true;
 }

@@ -1,5 +1,6 @@
 const Base = require('./Structures/Base');
 const BaseMessage = require('./Structures/BaseMessage')
+const Embed = require('./Structures/Embed')
 const Message = require('./Structures/Message')
 const fetch = require('node-fetch')
 
@@ -11,6 +12,7 @@ class Webhook extends Base {
      */
     constructor(webhookid, webhooktoken){
         super(webhookid, webhooktoken)
+        this.Embed = Embed;
     }
 
     async send(content, options){
@@ -26,10 +28,6 @@ class Webhook extends Base {
         fetch(this.url, {method: 'delete'})
         return true;
     }
-    /**
-     * 
-     * @param {string} name 
-     */
 }
 
 module.exports = Webhook;

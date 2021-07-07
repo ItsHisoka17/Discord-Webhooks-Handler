@@ -1,4 +1,5 @@
 const fetch = require('node-fetch');
+const APIError = require('./APIError')
 
 class Base {
     /**
@@ -15,6 +16,7 @@ class Base {
         } else {
             this.url = 'https://discord.com/api/webhooks/' + this.webhookid + '/' + this.webhooktoken;
         }
+        try {
         fetch(this.url)
         .then((res) => res.json())
         .then((data) => {
@@ -39,6 +41,9 @@ class Base {
              */
             this.avatar = data["avatar"]
         })
+    } catch {
+        throw new APIError('Error while fetching webhook: 404')
+    }
     }
     /**
      * 

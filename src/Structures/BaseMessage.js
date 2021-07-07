@@ -1,4 +1,3 @@
-const fetch = require('node-fetch');
 const Embed = require('./Embed')
 
 class BaseMessage {
@@ -14,8 +13,11 @@ class BaseMessage {
 
     resolve(){
         this.data = {...this.data, ...this.options};
-        if (this.content instanceof Embed){
-            this.data.embeds = [this.content]
+        if (typeof this.content === 'object'){
+            Object.assign(this.data, this.content)
+        }
+        if (this.content instanceof Embed || this.options instanceof Embed){
+            this.data.embeds = [this.content instanceof Embed ? this.content : this.options]
         }
         if (typeof this.content === 'string'){
             this.data.content = this.content

@@ -1,3 +1,5 @@
+const fetch = require('node-fetch');
+
 class Base {
     /**
      * 
@@ -13,6 +15,14 @@ class Base {
         } else {
             this.url = 'https://discord.com/api/webhooks/' + this.webhookid + '/' + this.webhooktoken;
         }
+        fetch(this.url)
+        .then((res) => res.json())
+        .then((data) => {
+            this.guild = data["guild_id"];
+            this.applicationid = data["application_id"]
+            this.username = data["username"]
+            this.avatar = data["avatar"]
+        })
     }
     /**
      * 

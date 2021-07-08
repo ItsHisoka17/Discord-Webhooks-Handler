@@ -1,5 +1,4 @@
 const fetch = require('node-fetch');
-const APIError = require('./APIError')
 
 class Base {
     /**
@@ -11,46 +10,19 @@ class Base {
         this.webhookid = id;
         this.webhooktoken = token;
         this.url = null;
-        if (this.resolveURL(id) || this.resolveURL(token)){
-            this.url = typeof this.resolveURL(id) === 'string' ? this.resolveURL(id) : this.resolveURL(token)
+        if (this.constructor.resolveURL(id) || this.constructor.resolveURL(token)){
+            this.url = typeof this.constructor.resolveURL(id) === 'string' ? this.constructor.resolveURL(id) : this.constructor.resolveURL(token)
         } else {
             this.url = 'https://discord.com/api/webhooks/' + this.webhookid + '/' + this.webhooktoken;
         }
-        try {
-        fetch(this.url)
-        .then((res) => res.json())
-        .then((data) => {
-            /**
-             * ID of the webhook's guild
-             * @type {string}
-             */
-            this.guild = data["guild_id"];
-            /**
-             * Application ID of the webhook
-             * @type {string}
-             */
-            this.applicationid = data["application_id"]
-            /**
-             * Webhook's username
-             * @type {string}
-             */
-            this.username = data["username"]
-            /**
-             * Webhook's avatar extension
-             * @type {string}
-             */
-            this.avatar = data["avatar"]
-        })
-    } catch {
-        throw new APIError('Error while fetching webhook: 404')
-    }
+        this.constructor.fetch.apply(this);
     }
     /**
      * 
      * @param {string} url
      * @returns {string | null} 
      */
-    resolveURL(url){
+    static resolveURL(url){
         let webhook_regex = /https:\/\/discord\.(com|app)\/api\/webhooks\/([0-9]{18})\/(.*)/
         let match = webhook_regex.exec(url);
         if (match){
@@ -58,6 +30,30 @@ class Base {
         } else {
             return null;
         }
+    }
+    static async fetch(){
+        let res = await fetch(this.url)
+        let data = await res.json()
+            /**
+             * ID of the webhook's guild
+             * @type {string}
+             */
+             this.guild = data.name || null;
+             /**
+              * Application ID of the webhook
+              * @type {string}
+              */
+             this.applicationid = data.application_id || null;
+             /**
+              * Webhook's username
+              * @type {string}
+              */
+             this.username = data.name || null;
+             /**
+              * Webhook's avatar extension
+              * @type {string}
+              */
+             this.avatar = data.name || null;
     }
 }
 

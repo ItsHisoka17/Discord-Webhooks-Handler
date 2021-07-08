@@ -264,7 +264,7 @@ class Embed {
    * @param {string} name The name of this field
    * @param {string} value The value of this field
    * @param {boolean} [inline=false] If this field will be displayed inline
-   * @returns {MessageEmbed}
+   * @return {Embed}
    */
   addField(name, value, inline) {
     return this.addFields({ name, value, inline });
@@ -273,7 +273,7 @@ class Embed {
   /**
    * Adds fields to the embed (max 25).
    * @param {...EmbedFieldData|EmbedFieldData[]} fields The fields to add
-   * @returns {MessageEmbed}
+   * @return {Embed}
    */
   addFields(...fields) {
     this.fields.push(...this.constructor.normalizeFields(fields));
@@ -285,7 +285,7 @@ class Embed {
    * @param {number} index The index to start at
    * @param {number} deleteCount The number of fields to remove
    * @param {...EmbedFieldData|EmbedFieldData[]} [fields] The replacing field objects
-   * @returns {MessageEmbed}
+   * @return {Embed}
    */
   spliceFields(index, deleteCount, ...fields) {
     this.fields.splice(index, deleteCount, ...this.constructor.normalizeFields(...fields));
@@ -297,7 +297,7 @@ class Embed {
    * @param {string} name The name of the author
    * @param {string} [iconURL] The icon URL of the author
    * @param {string} [url] The URL of the author
-   * @returns {MessageEmbed}
+   * @return {Embed}
    */
   setAuthor(name, iconURL, url) {
     this.author = { name: Util.verifyString(name, RangeError, 'EMBED_AUTHOR_NAME'), iconURL, url };
@@ -307,7 +307,7 @@ class Embed {
   /**
    * Sets the color of this embed.
    * @param {ColorResolvable} color The color of the embed
-   * @returns {MessageEmbed}
+   * @return {Embed}
    */
   setColor(color) {
     this.color = Util.resolveColor(color);
@@ -317,7 +317,7 @@ class Embed {
   /**
    * Sets the description of this embed.
    * @param {string} description The description
-   * @returns {MessageEmbed}
+   * @return {Embed}
    */
   setDescription(description) {
     this.description = Util.verifyString(description, RangeError, 'EMBED_DESCRIPTION');
@@ -328,7 +328,7 @@ class Embed {
    * Sets the footer of this embed.
    * @param {string} text The text of the footer
    * @param {string} [iconURL] The icon URL of the footer
-   * @returns {MessageEmbed}
+   * @return {Embed}
    */
   setFooter(text, iconURL) {
     this.footer = { text: Util.verifyString(text, RangeError, 'EMBED_FOOTER_TEXT'), iconURL };
@@ -338,7 +338,7 @@ class Embed {
   /**
    * Sets the image of this embed.
    * @param {string} url The URL of the image
-   * @returns {MessageEmbed}
+   * @return {Embed}
    */
   setImage(url) {
     this.image = { url };
@@ -348,7 +348,7 @@ class Embed {
   /**
    * Sets the thumbnail of this embed.
    * @param {string} url The URL of the thumbnail
-   * @returns {MessageEmbed}
+   * @return {Embed}
    */
   setThumbnail(url) {
     this.thumbnail = { url };
@@ -358,7 +358,7 @@ class Embed {
   /**
    * Sets the timestamp of this embed.
    * @param {Date|number} [timestamp=Date.now()] The timestamp or date
-   * @returns {MessageEmbed}
+   * @return {Embed}
    */
   setTimestamp(timestamp = Date.now()) {
     if (timestamp instanceof Date) timestamp = timestamp.getTime();
@@ -369,7 +369,7 @@ class Embed {
   /**
    * Sets the title of this embed.
    * @param {string} title The title
-   * @returns {MessageEmbed}
+   * @return {Embed}
    */
   setTitle(title) {
     this.title = Util.verifyString(title, RangeError, 'EMBED_TITLE');
@@ -379,7 +379,7 @@ class Embed {
   /**
    * Sets the URL of this embed.
    * @param {string} url The URL
-   * @returns {MessageEmbed}
+   * @return {Embed}
    */
   setURL(url) {
     this.url = url;
